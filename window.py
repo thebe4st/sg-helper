@@ -65,11 +65,11 @@ def timer_exec():
     if window.Tick1.currentText() != '':
         util.press(curHwnd,window.Tick1.currentText().lower())
     if window.Tick2.currentText() != '':
-        util.press(curHwnd,window.Tick1.currentText().lower())
+        util.press(curHwnd,window.Tick2.currentText().lower())
     if window.Tick3.currentText() != '':
-        util.press(curHwnd,window.Tick1.currentText().lower())
+        util.press(curHwnd,window.Tick3.currentText().lower())
     if window.Tick4.currentText() != '':
-        util.press(curHwnd,window.Tick1.currentText().lower())
+        util.press(curHwnd,window.Tick4.currentText().lower())
 
 
 def binary_img(img):
