@@ -1,0 +1,6 @@
+.venv/
+.idea/
+__pycache__/
+output/
+window.build/
+window.dist/
