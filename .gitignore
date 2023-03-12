@@ -4,3 +4,8 @@ __pycache__/
 output/
 window.build/
 window.dist/
+window.onefile-build/
+dist/
+build/
+window.exe
+window.spec
