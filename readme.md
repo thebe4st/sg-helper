@@ -15,23 +15,18 @@ pip install -r requirements.txt
 ## 构建exe
 
 ```bash
-python -m nuitka --onefile --windows-disable-console --enable-plugin=pyside6 window.py
-```
-or
-
-```bash
-pyinstaller  --noconfirm --onefile --windowed  window.py --hidden-import PySide6.QtSvg
+pyinstaller  --noconfirm --onefile --windowed  window.py --hidden-import PySide6.QtSvg -n sg-helper.exe
 ```
 
 ## 编辑ui
 
 ```bash
-pyside6-designer.exe sg-util.ui
+pyside6-designer sg-util.ui
 ```
 
 生成py文件
 ```bash
-pyside6-uic.exe sg-util.ui > ui.py
+pyside6-uic sg-util.ui -o ui.py
 ```
 
 

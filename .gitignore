@@ -9,3 +9,4 @@ dist/
 build/
 window.exe
 window.spec
+sg-helper.exe.spec

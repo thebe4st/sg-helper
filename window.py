@@ -1,10 +1,12 @@
 import sys
 import math
 import numpy as np
+import keyboard
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtWidgets import QApplication, QGraphicsPixmapItem,QMainWindow
 from PySide6.QtCore import QFile, QIODevice, QPoint, QTimer
-from PySide6.QtGui import QColor, QPixmap,QImage
+from PySide6.QtGui import QColor, QPixmap,QImage, QKeyEvent
+from PySide6.QtCore import Qt
 
 from ui import Ui_MainWindow
 
@@ -13,6 +15,7 @@ import util
 global app
 window = {}
 curHwnd = {}
+stuck_key_enabled = False  # 卡键启用状态
 
 
 def do_add_magic():
@@ -62,14 +65,15 @@ def timer_exec():
     if qcimg.pixelColor(position, 0).red() > 200:
         do_add_magic()
 
-    if window.Tick1.currentText() != '':
-        util.press(curHwnd,window.Tick1.currentText().lower())
-    if window.Tick2.currentText() != '':
-        util.press(curHwnd,window.Tick2.currentText().lower())
-    if window.Tick3.currentText() != '':
-        util.press(curHwnd,window.Tick3.currentText().lower())
-    if window.Tick4.currentText() != '':
-        util.press(curHwnd,window.Tick4.currentText().lower())
+    if stuck_key_enabled:
+        if window.Tick1.currentText() != '':
+            util.press(curHwnd,window.Tick1.currentText().lower())
+        if window.Tick2.currentText() != '':
+            util.press(curHwnd,window.Tick2.currentText().lower())
+        if window.Tick3.currentText() != '':
+            util.press(curHwnd,window.Tick3.currentText().lower())
+        if window.Tick4.currentText() != '':
+            util.press(curHwnd,window.Tick4.currentText().lower())
 
 
 def binary_img(img):
@@ -112,10 +116,27 @@ def init(main_window):
     on_window_select(0)
     main_window.WindowSelecter.currentIndexChanged.connect(on_window_select)
 
+    # 初始化卡键复选框
+    main_window.StuckKeyStatus.stateChanged.connect(lambda state: on_stuck_key_toggled(state))
+    
+    # 注册全局快捷键 CTRL+`
+    keyboard.add_hotkey('ctrl+`', on_ctrl_backtick_pressed)
+    
     # 初始化定时器
     main_window.timer = QTimer()
     main_window.timer.start(300)
     main_window.timer.timeout.connect(timer_exec)
+
+
+def on_stuck_key_toggled(state):
+    global stuck_key_enabled
+    stuck_key_enabled = (state == 2)  # 2 = Qt.Checked, 0 = Qt.Unchecked
+
+
+def on_ctrl_backtick_pressed():
+    global stuck_key_enabled, window
+    stuck_key_enabled = not stuck_key_enabled
+    window.StuckKeyStatus.setChecked(stuck_key_enabled)
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -125,18 +146,6 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
-    # ui_file_name = "sg-util.ui"
-    # ui_file = QFile(ui_file_name)
-    # if not ui_file.open(QIODevice.ReadOnly):
-    #     print(f"Cannot open {ui_file_name}: {ui_file.errorString()}")
-    #     sys.exit(-1)
-    # loader = QUiLoader()
-    # window = loader.load(ui_file)
-    # ui_file.close()
-    # if not window:
-    #     print(loader.errorString())
-    #     sys.exit(-1)
     mainWindow = MainWindow()
     mainWindow.show()
     window = mainWindow.ui

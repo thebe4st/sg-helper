@@ -1,4 +1,9 @@
 keyboard_map = {
+    # 修饰键常量
+    'VK_MENU': 0x12,      # ALT 键
+    'VK_CONTROL': 0x11,    # CTRL 键
+    'VK_SHIFT': 0x10,     # SHIFT 键
+    
     'backspace': 0x08,
     'tab': 0x09,
     'clear': 0x0C,
