@@ -31,7 +31,7 @@ pyside6-designer.exe sg-util.ui
 
 生成py文件
 ```bash
-
+pyside6-uic.exe sg-util.ui > ui.py
 ```
 
 
