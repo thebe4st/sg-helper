@@ -20,7 +20,7 @@ python -m nuitka --onefile --windows-disable-console --enable-plugin=pyside6 win
 or
 
 ```bash
- pyinstaller -F window.py --hidden-import PySide6.QtSvg
+pyinstaller  --noconfirm --onefile --windowed  window.py --hidden-import PySide6.QtSvg
 ```
 
 ## 编辑ui
