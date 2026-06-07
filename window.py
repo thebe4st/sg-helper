@@ -15,7 +15,19 @@ import util
 global app
 window = {}
 curHwnd = {}
-stuck_key_enabled = False  # 卡键启用状态
+
+# 每个窗口的独立状态
+class WindowState:
+    def __init__(self, hwnd):
+        self.hwnd = hwnd
+        self.stuck_key_enabled = False
+        self.enable_blood_helper = True
+        self.enable_magic_helper = True
+        self.blood_key = 'R'
+        self.magic_key = 'T'
+        self.tick_keys = ['A', '', '', '']  # Tick1-4
+
+window_states = {}  # {hwnd: WindowState}
 
 
 def do_add_magic():
@@ -34,46 +46,63 @@ def do_add_blood():
     util.alt_press(curHwnd, txt.lower())
 
 
+def do_add_magic_for_hwnd(hwnd, key):
+    util.alt_press(hwnd, key.lower())
+
+def do_add_blood_for_hwnd(hwnd, key):
+    util.alt_press(hwnd, key.lower())
+
 def timer_exec():
-    global curHwnd
-    # 找角色名
-    pic = util.grab_image_qt(curHwnd, util.Position(130, 7), util.Rectangle(90, 15))
-    util.show_pix_on_graph_view(window.CurrentRolePicture, pic)
-
-    # 找血量
-    pic = find_blood_pic(curHwnd)
-    util.show_pix_on_graph_view(window.CurrentBloodPicture, pic)
-
-    # 绘制二值化之后的血条
-    qcimg = binary_img(pic.toImage())
-    precentage = int(window.MinBloodPrecentageSelecter.currentText())* 0.01
-    position = math.ceil(qcimg.width() * precentage)
-    if qcimg.pixelColor(position, 0).red() > 200:
-        do_add_blood()
-    # util.show_pix_on_graph_view(window.CurrentBinaryBloodPicture, QPixmap.fromImage(qcimg))
-
-    # 找蓝
-    pic = find_magic_pic(curHwnd)
-    qimg = pic.toImage()
-    util.show_pix_on_graph_view(window.CurrentMagicPicture, pic)
-
-    # 绘制二值化之后的蓝条
-    qcimg = binary_img(qimg)
-    # util.show_pix_on_graph_view(window.CurrentBinaryMagicPicture, QPixmap.fromImage(qcimg))
-
-    position = math.ceil(qcimg.width() * 0.3)
-    if qcimg.pixelColor(position, 0).red() > 200:
-        do_add_magic()
-
-    if stuck_key_enabled:
-        if window.Tick1.currentText() != '':
-            util.press(curHwnd,window.Tick1.currentText().lower())
-        if window.Tick2.currentText() != '':
-            util.press(curHwnd,window.Tick2.currentText().lower())
-        if window.Tick3.currentText() != '':
-            util.press(curHwnd,window.Tick3.currentText().lower())
-        if window.Tick4.currentText() != '':
-            util.press(curHwnd,window.Tick4.currentText().lower())
+    global curHwnd, window_states
+    
+    # 为所有窗口执行操作
+    for hwnd, state in list(window_states.items()):
+        # 获取当前窗口的 UI 元素
+        curHwnd[hwnd] = hwnd
+        
+        # 找血量
+        pic = find_blood_pic(hwnd)
+        
+        # 绘制二值化之后的血条
+        if pic:
+            qcimg = binary_img(pic.toImage())
+            precentage = int(window.MinBloodPrecentageSelecter.currentText()) * 0.01
+            position = math.ceil(qcimg.width() * precentage)
+            if qcimg.pixelColor(position, 0).red() > 200:
+                if state.enable_blood_helper:
+                    do_add_blood_for_hwnd(hwnd, state.blood_key)
+        
+        # 找蓝
+        pic = find_magic_pic(hwnd)
+        
+        # 绘制二值化之后的蓝条
+        if pic:
+            qcimg = binary_img(pic.toImage())
+            position = math.ceil(qcimg.width() * 0.3)
+            if qcimg.pixelColor(position, 0).red() > 200:
+                if state.enable_magic_helper:
+                    do_add_magic_for_hwnd(hwnd, state.magic_key)
+        
+        # 卡键
+        if state.stuck_key_enabled:
+            for tick_key in state.tick_keys:
+                if tick_key != '':
+                    util.press(hwnd, tick_key.lower())
+    
+    # 更新 UI 显示（当前选中的窗口）
+    current_hwnd = curHwnd.get('current')
+    if current_hwnd:
+        # 显示角色名
+        pic = util.grab_image_qt(current_hwnd, util.Position(130, 7), util.Rectangle(90, 15))
+        util.show_pix_on_graph_view(window.CurrentRolePicture, pic)
+        
+        # 显示血量
+        pic = find_blood_pic(current_hwnd)
+        util.show_pix_on_graph_view(window.CurrentBloodPicture, pic)
+        
+        # 显示蓝量
+        pic = find_magic_pic(current_hwnd)
+        util.show_pix_on_graph_view(window.CurrentMagicPicture, pic)
 
 
 def binary_img(img):
@@ -104,8 +133,43 @@ def find_magic_pic(hwnd):
     return util.grab_image_qt(hwnd, util.Position(100, 54), util.Rectangle(98, 8))
 
 def on_window_select(idx):
-    global curHwnd
-    curHwnd = window.WindowSelecter.itemData(idx)
+    global curHwnd, window_states
+    hwnd = window.WindowSelecter.itemData(idx)
+    curHwnd['current'] = hwnd
+    
+    # 如果这个窗口没有状态，创建一个新的
+    if hwnd not in window_states:
+        window_states[hwnd] = WindowState(hwnd)
+    
+    # 从 UI 加载状态到 WindowState
+    state = window_states[hwnd]
+    state.blood_key = window.MinBloodKeySelecter.currentText()
+    state.magic_key = window.MinMagicKeySelecter.currentText()
+    state.tick_keys = [
+        window.Tick1.currentText(),
+        window.Tick2.currentText(),
+        window.Tick3.currentText(),
+        window.Tick4.currentText()
+    ]
+    
+    # 更新 UI 显示当前窗口的状态
+    window.StuckKeyStatus.setChecked(state.stuck_key_enabled)
+
+
+def save_current_window_state():
+    """保存当前 UI 设置到当前窗口的状态"""
+    global curHwnd, window_states
+    hwnd = curHwnd.get('current')
+    if hwnd and hwnd in window_states:
+        state = window_states[hwnd]
+        state.blood_key = window.MinBloodKeySelecter.currentText()
+        state.magic_key = window.MinMagicKeySelecter.currentText()
+        state.tick_keys = [
+            window.Tick1.currentText(),
+            window.Tick2.currentText(),
+            window.Tick3.currentText(),
+            window.Tick4.currentText()
+        ]
 
 
 def init(main_window):
@@ -115,6 +179,14 @@ def init(main_window):
         main_window.WindowSelecter.addItem(w.window_text, w.hwnd)
     on_window_select(0)
     main_window.WindowSelecter.currentIndexChanged.connect(on_window_select)
+    
+    # 连接 UI 变化事件，保存状态
+    main_window.MinBloodKeySelecter.currentIndexChanged.connect(lambda: save_current_window_state())
+    main_window.MinMagicKeySelecter.currentIndexChanged.connect(lambda: save_current_window_state())
+    main_window.Tick1.currentIndexChanged.connect(lambda: save_current_window_state())
+    main_window.Tick2.currentIndexChanged.connect(lambda: save_current_window_state())
+    main_window.Tick3.currentIndexChanged.connect(lambda: save_current_window_state())
+    main_window.Tick4.currentIndexChanged.connect(lambda: save_current_window_state())
 
     # 初始化卡键复选框
     main_window.StuckKeyStatus.stateChanged.connect(lambda state: on_stuck_key_toggled(state))
@@ -129,14 +201,18 @@ def init(main_window):
 
 
 def on_stuck_key_toggled(state):
-    global stuck_key_enabled
-    stuck_key_enabled = (state == 2)  # 2 = Qt.Checked, 0 = Qt.Unchecked
+    global curHwnd, window_states
+    hwnd = curHwnd.get('current')
+    if hwnd and hwnd in window_states:
+        window_states[hwnd].stuck_key_enabled = (state == 2)
 
 
 def on_ctrl_backtick_pressed():
-    global stuck_key_enabled, window
-    stuck_key_enabled = not stuck_key_enabled
-    window.StuckKeyStatus.setChecked(stuck_key_enabled)
+    global curHwnd, window_states, window
+    hwnd = curHwnd.get('current')
+    if hwnd and hwnd in window_states:
+        window_states[hwnd].stuck_key_enabled = not window_states[hwnd].stuck_key_enabled
+        window.StuckKeyStatus.setChecked(window_states[hwnd].stuck_key_enabled)
 
 class MainWindow(QMainWindow):
     def __init__(self):
