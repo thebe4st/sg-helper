@@ -14,7 +14,7 @@ import util
 
 global app
 window = {}
-curHwnd = {}
+current_hwnd = None  # 当前选中的窗口
 
 # 每个窗口的独立状态
 class WindowState:
@@ -34,7 +34,8 @@ def do_add_magic():
     if not window.EnableMagicHelper.isChecked():
         return
     txt = window.MinMagicKeySelecter.currentText()
-    util.alt_press(curHwnd, txt.lower())
+    if current_hwnd:
+        util.alt_press(current_hwnd, txt.lower())
 
 
 def do_add_blood():
@@ -43,7 +44,8 @@ def do_add_blood():
     
     print('加血')
     txt = window.MinBloodKeySelecter.currentText()
-    util.alt_press(curHwnd, txt.lower())
+    if current_hwnd:
+        util.alt_press(current_hwnd, txt.lower())
 
 
 def do_add_magic_for_hwnd(hwnd, key):
@@ -53,13 +55,10 @@ def do_add_blood_for_hwnd(hwnd, key):
     util.alt_press(hwnd, key.lower())
 
 def timer_exec():
-    global curHwnd, window_states
+    global current_hwnd, window_states
     
     # 为所有窗口执行操作
     for hwnd, state in list(window_states.items()):
-        # 获取当前窗口的 UI 元素
-        curHwnd[hwnd] = hwnd
-        
         # 找血量
         pic = find_blood_pic(hwnd)
         
@@ -90,7 +89,6 @@ def timer_exec():
                     util.press(hwnd, tick_key.lower())
     
     # 更新 UI 显示（当前选中的窗口）
-    current_hwnd = curHwnd.get('current')
     if current_hwnd:
         # 显示角色名
         pic = util.grab_image_qt(current_hwnd, util.Position(130, 7), util.Rectangle(90, 15))
@@ -133,9 +131,10 @@ def find_magic_pic(hwnd):
     return util.grab_image_qt(hwnd, util.Position(100, 54), util.Rectangle(98, 8))
 
 def on_window_select(idx):
-    global curHwnd, window_states
+    global current_hwnd, window_states
     hwnd = window.WindowSelecter.itemData(idx)
-    curHwnd['current'] = hwnd
+    current_hwnd = hwnd
+    print(f"切换到窗口: {hwnd}")
     
     # 如果这个窗口没有状态，创建一个新的
     if hwnd not in window_states:
@@ -154,14 +153,14 @@ def on_window_select(idx):
     
     # 更新 UI 显示当前窗口的状态
     window.StuckKeyStatus.setChecked(state.stuck_key_enabled)
+    print(f"当前窗口卡键状态: {state.stuck_key_enabled}")
 
 
 def save_current_window_state():
     """保存当前 UI 设置到当前窗口的状态"""
-    global curHwnd, window_states
-    hwnd = curHwnd.get('current')
-    if hwnd and hwnd in window_states:
-        state = window_states[hwnd]
+    global current_hwnd, window_states
+    if current_hwnd and current_hwnd in window_states:
+        state = window_states[current_hwnd]
         state.blood_key = window.MinBloodKeySelecter.currentText()
         state.magic_key = window.MinMagicKeySelecter.currentText()
         state.tick_keys = [
@@ -201,18 +200,18 @@ def init(main_window):
 
 
 def on_stuck_key_toggled(state):
-    global curHwnd, window_states
-    hwnd = curHwnd.get('current')
-    if hwnd and hwnd in window_states:
-        window_states[hwnd].stuck_key_enabled = (state == 2)
+    global current_hwnd, window_states
+    if current_hwnd and current_hwnd in window_states:
+        window_states[current_hwnd].stuck_key_enabled = (state == 2)
 
 
 def on_ctrl_backtick_pressed():
-    global curHwnd, window_states, window
-    hwnd = curHwnd.get('current')
-    if hwnd and hwnd in window_states:
-        window_states[hwnd].stuck_key_enabled = not window_states[hwnd].stuck_key_enabled
-        window.StuckKeyStatus.setChecked(window_states[hwnd].stuck_key_enabled)
+    global current_hwnd, window_states, window
+    print(f"快捷键被触发，当前窗口: {current_hwnd}")
+    if current_hwnd and current_hwnd in window_states:
+        window_states[current_hwnd].stuck_key_enabled = not window_states[current_hwnd].stuck_key_enabled
+        window.StuckKeyStatus.setChecked(window_states[current_hwnd].stuck_key_enabled)
+        print(f"卡键状态已切换为: {window_states[current_hwnd].stuck_key_enabled}")
 
 class MainWindow(QMainWindow):
     def __init__(self):
