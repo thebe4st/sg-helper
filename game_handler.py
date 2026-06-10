@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import win32gui
 from PySide6.QtCore import QTimer, QPoint
 from PySide6.QtGui import QColor, QPixmap, QImage
 
@@ -35,6 +36,11 @@ class GameHandler:
         
         # 为所有窗口执行操作
         for hwnd, state in list(window_states.items()):
+            # 检查窗口是否仍然存在
+            if not win32gui.IsWindow(hwnd):
+                print(f"窗口已关闭，跳过: {hwnd}")
+                continue
+            
             # 找血量
             pic = self.find_blood_pic(hwnd)
             
@@ -66,7 +72,7 @@ class GameHandler:
         
         # 更新 UI 显示（当前选中的窗口）
         current_hwnd = self.state_manager.current_hwnd
-        if current_hwnd:
+        if current_hwnd and win32gui.IsWindow(current_hwnd):
             # 显示角色名
             pic = util.grab_image_qt(current_hwnd, util.Position(130, 7), util.Rectangle(90, 15))
             util.show_pix_on_graph_view(self.window.CurrentRolePicture, pic)
@@ -125,6 +131,9 @@ class GameHandler:
                 if index >= 0:
                     self.window.WindowSelecter.removeItem(index)
                     print(f"窗口已关闭: {text} ({hwnd})")
+                
+                # 从状态管理器中移除已关闭的窗口状态
+                self.state_manager.remove_window(hwnd)
                 
                 # 如果关闭的是当前窗口，切换到其他窗口
                 if self.state_manager.current_hwnd == hwnd:
