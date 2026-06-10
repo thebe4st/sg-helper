@@ -43,18 +43,6 @@ def alt_press(handle,key):
     win32api.SendMessage(handle, win32con.WM_KEYDOWN, const.keyboard_map[key], 1<<29)
     win32api.SendMessage(handle, win32con.WM_KEYUP, const.keyboard_map[key], 1<<29)
 
-def alt_pressv2(handle,key):
-    win32api.PostMessage(handle, win32con.WM_SYSKEYDOWN, win32con.VK_MENU,  1<<29)
-    win32api.PostMessage(handle, win32con.WM_SYSKEYDOWN, const.keyboard_map[key],  1<<29)
-    win32api.PostMessage(handle, win32con.WM_SYSKEYUP, const.keyboard_map[key],  1<<29)
-    win32api.PostMessage(handle, win32con.WM_SYSKEYUP, win32con.VK_MENU,  1<<29)
-
-def alt_pressv3(handle,key):
-    win32api.keybd_event(0x12,0,0,0)
-    win32api.keybd_event(const.keyboard_map[key],0,0,0)
-    win32api.keybd_event(0x12,0,win32con.KEYEVENTF_KEYUP,0)
-    win32api.keybd_event(const.keyboard_map[key],0,win32con.KEYEVENTF_KEYUP,0)
-
 def find_window(window_name):
     windows = []
     win32gui.EnumWindows(_callback, windows)
@@ -90,9 +78,3 @@ def show_pix_on_graph_view(widget, pixmap):
     scene = QGraphicsScene()
     scene.addItem(item)
     widget.setScene(scene)
-
-
-if __name__ == '__main__':
-    ws = find_window('QQ三国')
-    img = grab_image_qt(ws[0].hwnd, Position(100, 200), Rectangle(100, 200))
-    img.show()
