@@ -15,7 +15,7 @@ pip install -r requirements.txt
 ## 构建exe
 
 ```bash
-pyinstaller  --noconfirm --onefile --windowed  window.py --hidden-import PySide6.QtSvg -n sg-helper.exe
+pyinstaller  --noconfirm --onefile --windowed  main.py --hidden-import PySide6.QtSvg -n sg-helper.exe
 ```
 
 ## 编辑ui

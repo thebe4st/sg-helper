@@ -60,7 +60,7 @@ def find_window(window_name):
     win32gui.EnumWindows(_callback, windows)
     ret = []
     for i in windows:
-        if window_name in i.window_text:
+        if window_name in i.window_text and i.window_text.endswith('线'):
             ret.append(i)
     return ret
 
