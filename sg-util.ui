@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>195</width>
-    <height>586</height>
+    <height>640</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,13 +25,13 @@
   <property name="minimumSize">
    <size>
     <width>195</width>
-    <height>586</height>
+    <height>640</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>195</width>
-    <height>586</height>
+    <height>640</height>
    </size>
   </property>
   <property name="acceptDrops">
@@ -289,6 +289,67 @@
      <string>卡键 Ctrl + ` 启用</string>
     </property>
     <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QComboBox" name="Tick1">
+       <item>
+        <property name="text">
+         <string>A</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>S</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>D</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>F</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Q</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>W</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>E</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>R</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>T</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QCheckBox" name="StuckKeyStatus">
+       <property name="text">
+        <string>启用</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QComboBox" name="Tick4">
        <item>
@@ -451,67 +512,6 @@
        </item>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QComboBox" name="Tick1">
-       <item>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>S</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Q</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>E</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>T</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="StuckKeyStatus">
-       <property name="text">
-        <string>启用</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
@@ -574,6 +574,38 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="btnQuickStart">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>561</y>
+      <width>151</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>快速启动（上次大区）</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnReSelectExe">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>593</y>
+      <width>151</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>1000</width>
+      <height>30</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>重选游戏路径</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

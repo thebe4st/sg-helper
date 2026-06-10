@@ -17,7 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFormLayout,
     QGraphicsView, QGridLayout, QGroupBox, QLabel,
-    QMainWindow, QSizePolicy, QStatusBar, QWidget)
+    QMainWindow, QPushButton, QSizePolicy, QStatusBar,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,14 +26,14 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.setWindowModality(Qt.WindowModality.NonModal)
         MainWindow.setEnabled(True)
-        MainWindow.resize(195, 586)
+        MainWindow.resize(195, 640)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(255)
         sizePolicy.setVerticalStretch(100)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMinimumSize(QSize(195, 586))
-        MainWindow.setMaximumSize(QSize(195, 586))
+        MainWindow.setMinimumSize(QSize(195, 640))
+        MainWindow.setMaximumSize(QSize(195, 640))
         MainWindow.setAcceptDrops(False)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -151,6 +152,26 @@ class Ui_MainWindow(object):
         self.groupBox_3.setGeometry(QRect(20, 390, 151, 160))
         self.formLayout = QFormLayout(self.groupBox_3)
         self.formLayout.setObjectName(u"formLayout")
+        self.Tick1 = QComboBox(self.groupBox_3)
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.addItem("")
+        self.Tick1.setObjectName(u"Tick1")
+
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.Tick1)
+
+        self.StuckKeyStatus = QCheckBox(self.groupBox_3)
+        self.StuckKeyStatus.setObjectName(u"StuckKeyStatus")
+
+        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.StuckKeyStatus)
+
         self.Tick4 = QComboBox(self.groupBox_3)
         self.Tick4.addItem("")
         self.Tick4.addItem("")
@@ -196,26 +217,6 @@ class Ui_MainWindow(object):
 
         self.formLayout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.Tick3)
 
-        self.Tick1 = QComboBox(self.groupBox_3)
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.addItem("")
-        self.Tick1.setObjectName(u"Tick1")
-
-        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.Tick1)
-
-        self.StuckKeyStatus = QCheckBox(self.groupBox_3)
-        self.StuckKeyStatus.setObjectName(u"StuckKeyStatus")
-
-        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.StuckKeyStatus)
-
         self.groupBox_4 = QGroupBox(self.centralwidget)
         self.groupBox_4.setObjectName(u"groupBox_4")
         self.groupBox_4.setGeometry(QRect(20, 10, 144, 86))
@@ -247,6 +248,13 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addWidget(self.CurrentRolePicture, 1, 1, 1, 1)
 
+        self.btnQuickStart = QPushButton(self.centralwidget)
+        self.btnQuickStart.setObjectName(u"btnQuickStart")
+        self.btnQuickStart.setGeometry(QRect(21, 561, 151, 26))
+        self.btnReSelectExe = QPushButton(self.centralwidget)
+        self.btnReSelectExe.setObjectName(u"btnReSelectExe")
+        self.btnReSelectExe.setGeometry(QRect(21, 593, 151, 26))
+        self.btnReSelectExe.setMaximumSize(QSize(1000, 30))
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -289,6 +297,18 @@ class Ui_MainWindow(object):
         self.MinMagicKeySelecter.setItemText(2, QCoreApplication.translate("MainWindow", u"E", None))
 
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"\u5361\u952e Ctrl + ` \u542f\u7528", None))
+        self.Tick1.setItemText(0, QCoreApplication.translate("MainWindow", u"A", None))
+        self.Tick1.setItemText(1, "")
+        self.Tick1.setItemText(2, QCoreApplication.translate("MainWindow", u"S", None))
+        self.Tick1.setItemText(3, QCoreApplication.translate("MainWindow", u"D", None))
+        self.Tick1.setItemText(4, QCoreApplication.translate("MainWindow", u"F", None))
+        self.Tick1.setItemText(5, QCoreApplication.translate("MainWindow", u"Q", None))
+        self.Tick1.setItemText(6, QCoreApplication.translate("MainWindow", u"W", None))
+        self.Tick1.setItemText(7, QCoreApplication.translate("MainWindow", u"E", None))
+        self.Tick1.setItemText(8, QCoreApplication.translate("MainWindow", u"R", None))
+        self.Tick1.setItemText(9, QCoreApplication.translate("MainWindow", u"T", None))
+
+        self.StuckKeyStatus.setText(QCoreApplication.translate("MainWindow", u"\u542f\u7528", None))
         self.Tick4.setItemText(0, "")
         self.Tick4.setItemText(1, QCoreApplication.translate("MainWindow", u"A", None))
         self.Tick4.setItemText(2, QCoreApplication.translate("MainWindow", u"S", None))
@@ -322,20 +342,10 @@ class Ui_MainWindow(object):
         self.Tick3.setItemText(8, QCoreApplication.translate("MainWindow", u"R", None))
         self.Tick3.setItemText(9, QCoreApplication.translate("MainWindow", u"T", None))
 
-        self.Tick1.setItemText(0, QCoreApplication.translate("MainWindow", u"A", None))
-        self.Tick1.setItemText(1, "")
-        self.Tick1.setItemText(2, QCoreApplication.translate("MainWindow", u"S", None))
-        self.Tick1.setItemText(3, QCoreApplication.translate("MainWindow", u"D", None))
-        self.Tick1.setItemText(4, QCoreApplication.translate("MainWindow", u"F", None))
-        self.Tick1.setItemText(5, QCoreApplication.translate("MainWindow", u"Q", None))
-        self.Tick1.setItemText(6, QCoreApplication.translate("MainWindow", u"W", None))
-        self.Tick1.setItemText(7, QCoreApplication.translate("MainWindow", u"E", None))
-        self.Tick1.setItemText(8, QCoreApplication.translate("MainWindow", u"R", None))
-        self.Tick1.setItemText(9, QCoreApplication.translate("MainWindow", u"T", None))
-
-        self.StuckKeyStatus.setText(QCoreApplication.translate("MainWindow", u"\u542f\u7528", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"\u7a97\u53e3", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u7a97\u53e3\uff1a", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u89d2\u8272\uff1a", None))
+        self.btnQuickStart.setText(QCoreApplication.translate("MainWindow", u"\u5feb\u901f\u542f\u52a8\uff08\u4e0a\u6b21\u5927\u533a\uff09", None))
+        self.btnReSelectExe.setText(QCoreApplication.translate("MainWindow", u"\u91cd\u9009\u6e38\u620f\u8def\u5f84", None))
     # retranslateUi
 

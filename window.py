@@ -1,228 +1,181 @@
-import sys
-import math
-import numpy as np
-import keyboard
-from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QApplication, QGraphicsPixmapItem,QMainWindow
-from PySide6.QtCore import QFile, QIODevice, QPoint, QTimer
-from PySide6.QtGui import QColor, QPixmap,QImage, QKeyEvent
-from PySide6.QtCore import Qt
-
+from PySide6.QtWidgets import QMainWindow, QFileDialog
 from ui import Ui_MainWindow
-
-import util
-
-global app
-window = {}
-current_hwnd = None  # 当前选中的窗口
-
-# 每个窗口的独立状态
-class WindowState:
-    def __init__(self, hwnd):
-        self.hwnd = hwnd
-        self.stuck_key_enabled = False
-        self.enable_blood_helper = True
-        self.enable_magic_helper = True
-        self.blood_key = 'R'
-        self.magic_key = 'T'
-        self.tick_keys = ['A', '', '', '']  # Tick1-4
-
-window_states = {}  # {hwnd: WindowState}
-
-
-def do_add_magic():
-    if not window.EnableMagicHelper.isChecked():
-        return
-    txt = window.MinMagicKeySelecter.currentText()
-    if current_hwnd:
-        util.alt_press(current_hwnd, txt.lower())
-
-
-def do_add_blood():
-    if not window.EnableBloodHelper.isChecked():
-        return
-    
-    print('加血')
-    txt = window.MinBloodKeySelecter.currentText()
-    if current_hwnd:
-        util.alt_press(current_hwnd, txt.lower())
-
-
-def do_add_magic_for_hwnd(hwnd, key):
-    util.alt_press(hwnd, key.lower())
-
-def do_add_blood_for_hwnd(hwnd, key):
-    util.alt_press(hwnd, key.lower())
-
-def timer_exec():
-    global current_hwnd, window_states
-    
-    # 为所有窗口执行操作
-    for hwnd, state in list(window_states.items()):
-        # 找血量
-        pic = find_blood_pic(hwnd)
-        
-        # 绘制二值化之后的血条
-        if pic:
-            qcimg = binary_img(pic.toImage())
-            precentage = int(window.MinBloodPrecentageSelecter.currentText()) * 0.01
-            position = math.ceil(qcimg.width() * precentage)
-            if qcimg.pixelColor(position, 0).red() > 200:
-                if state.enable_blood_helper:
-                    do_add_blood_for_hwnd(hwnd, state.blood_key)
-        
-        # 找蓝
-        pic = find_magic_pic(hwnd)
-        
-        # 绘制二值化之后的蓝条
-        if pic:
-            qcimg = binary_img(pic.toImage())
-            position = math.ceil(qcimg.width() * 0.3)
-            if qcimg.pixelColor(position, 0).red() > 200:
-                if state.enable_magic_helper:
-                    do_add_magic_for_hwnd(hwnd, state.magic_key)
-        
-        # 卡键
-        if state.stuck_key_enabled:
-            for tick_key in state.tick_keys:
-                if tick_key != '':
-                    util.press(hwnd, tick_key.lower())
-    
-    # 更新 UI 显示（当前选中的窗口）
-    if current_hwnd:
-        # 显示角色名
-        pic = util.grab_image_qt(current_hwnd, util.Position(130, 7), util.Rectangle(90, 15))
-        util.show_pix_on_graph_view(window.CurrentRolePicture, pic)
-        
-        # 显示血量
-        pic = find_blood_pic(current_hwnd)
-        util.show_pix_on_graph_view(window.CurrentBloodPicture, pic)
-        
-        # 显示蓝量
-        pic = find_magic_pic(current_hwnd)
-        util.show_pix_on_graph_view(window.CurrentMagicPicture, pic)
-
-
-def binary_img(img):
-    qcimg = img.copy(0,0,img.width(),1)
-    for i in range(0, qcimg.width()):
-        for j in range(0, qcimg.height()):
-            c = qcimg.pixelColor(i, j)
-            rc = binary_color(c)
-            qcimg.setPixelColor(QPoint(i, j), rc)
-    return qcimg
-
-
-def binary_color(c):
-    r = c.red()
-    g = c.green()
-    b = c.blue()
-    count = r + g + b
-    if np.var([r,g,b]) < 100:
-        return QColor(255, 255, 255)
-    else:
-        return QColor(0, 0, 0)
-
-def find_blood_pic(hwnd):
-    return util.grab_image_qt(hwnd, util.Position(100, 33), util.Rectangle(118, 15))
-
-
-def find_magic_pic(hwnd):
-    return util.grab_image_qt(hwnd, util.Position(100, 54), util.Rectangle(98, 8))
-
-def on_window_select(idx):
-    global current_hwnd, window_states
-    hwnd = window.WindowSelecter.itemData(idx)
-    current_hwnd = hwnd
-    print(f"切换到窗口: {hwnd}")
-    
-    # 如果这个窗口没有状态，创建一个新的
-    if hwnd not in window_states:
-        window_states[hwnd] = WindowState(hwnd)
-    
-    # 从 UI 加载状态到 WindowState
-    state = window_states[hwnd]
-    state.blood_key = window.MinBloodKeySelecter.currentText()
-    state.magic_key = window.MinMagicKeySelecter.currentText()
-    state.tick_keys = [
-        window.Tick1.currentText(),
-        window.Tick2.currentText(),
-        window.Tick3.currentText(),
-        window.Tick4.currentText()
-    ]
-    
-    # 更新 UI 显示当前窗口的状态
-    window.StuckKeyStatus.setChecked(state.stuck_key_enabled)
-    print(f"当前窗口卡键状态: {state.stuck_key_enabled}")
-
-
-def save_current_window_state():
-    """保存当前 UI 设置到当前窗口的状态"""
-    global current_hwnd, window_states
-    if current_hwnd and current_hwnd in window_states:
-        state = window_states[current_hwnd]
-        state.blood_key = window.MinBloodKeySelecter.currentText()
-        state.magic_key = window.MinMagicKeySelecter.currentText()
-        state.tick_keys = [
-            window.Tick1.currentText(),
-            window.Tick2.currentText(),
-            window.Tick3.currentText(),
-            window.Tick4.currentText()
-        ]
-
-
-def init(main_window):
-    # 初始化窗口选择器
-    ws = util.find_window('QQ三国')
-    for w in ws:
-        main_window.WindowSelecter.addItem(w.window_text, w.hwnd)
-    on_window_select(0)
-    main_window.WindowSelecter.currentIndexChanged.connect(on_window_select)
-    
-    # 连接 UI 变化事件，保存状态
-    main_window.MinBloodKeySelecter.currentIndexChanged.connect(lambda: save_current_window_state())
-    main_window.MinMagicKeySelecter.currentIndexChanged.connect(lambda: save_current_window_state())
-    main_window.Tick1.currentIndexChanged.connect(lambda: save_current_window_state())
-    main_window.Tick2.currentIndexChanged.connect(lambda: save_current_window_state())
-    main_window.Tick3.currentIndexChanged.connect(lambda: save_current_window_state())
-    main_window.Tick4.currentIndexChanged.connect(lambda: save_current_window_state())
-
-    # 初始化卡键复选框
-    main_window.StuckKeyStatus.stateChanged.connect(lambda state: on_stuck_key_toggled(state))
-    
-    # 注册全局快捷键 CTRL+`
-    keyboard.add_hotkey('ctrl+`', on_ctrl_backtick_pressed)
-    
-    # 初始化定时器
-    main_window.timer = QTimer()
-    main_window.timer.start(300)
-    main_window.timer.timeout.connect(timer_exec)
-
-
-def on_stuck_key_toggled(state):
-    global current_hwnd, window_states
-    if current_hwnd and current_hwnd in window_states:
-        window_states[current_hwnd].stuck_key_enabled = (state == 2)
-
-
-def on_ctrl_backtick_pressed():
-    global current_hwnd, window_states, window
-    print(f"快捷键被触发，当前窗口: {current_hwnd}")
-    if current_hwnd and current_hwnd in window_states:
-        window_states[current_hwnd].stuck_key_enabled = not window_states[current_hwnd].stuck_key_enabled
-        window.StuckKeyStatus.setChecked(window_states[current_hwnd].stuck_key_enabled)
-        print(f"卡键状态已切换为: {window_states[current_hwnd].stuck_key_enabled}")
+import subprocess
+import os
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, state_manager, game_handler, hotkey_manager, config_manager):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    mainWindow = MainWindow()
-    mainWindow.show()
-    window = mainWindow.ui
-    init(window)
-    sys.exit(app.exec())
+        
+        self.state_manager = state_manager
+        self.game_handler = game_handler
+        self.hotkey_manager = hotkey_manager
+        self.config_manager = config_manager
+        
+        # 设置引用
+        self.game_handler.set_window(self.ui)
+        self.hotkey_manager.set_window(self.ui)
+        
+        # 初始化窗口
+        self.init_window()
+    
+    def init_window(self):
+        """初始化窗口"""
+        # 初始化窗口选择器
+        self.init_window_selector()
+        
+        # 连接 UI 变化事件
+        self.connect_ui_events()
+        
+        # 注册快捷键
+        self.hotkey_manager.register_hotkeys()
+        
+        # 启动定时器
+        self.game_handler.start_timers()
+    
+    def init_window_selector(self):
+        """初始化窗口选择器"""
+        import util
+        
+        ws = util.find_window('QQ三国')
+        for w in ws:
+            self.ui.WindowSelecter.addItem(w.window_text, w.hwnd)
+            self.state_manager.get_state(w.hwnd)
+        
+        if self.ui.WindowSelecter.count() > 0:
+            self.on_window_select(0)
+        
+        self.ui.WindowSelecter.currentIndexChanged.connect(self.on_window_select)
+    
+    def connect_ui_events(self):
+        """连接 UI 事件"""
+        # 保存状态事件
+        self.ui.MinBloodKeySelecter.currentIndexChanged.connect(self.save_current_state)
+        self.ui.MinMagicKeySelecter.currentIndexChanged.connect(self.save_current_state)
+        self.ui.Tick1.currentIndexChanged.connect(self.save_current_state)
+        self.ui.Tick2.currentIndexChanged.connect(self.save_current_state)
+        self.ui.Tick3.currentIndexChanged.connect(self.save_current_state)
+        self.ui.Tick4.currentIndexChanged.connect(self.save_current_state)
+        
+        # 卡键状态变化
+        self.ui.StuckKeyStatus.stateChanged.connect(self.on_stuck_key_toggled)
+        
+        # 快速启动按钮
+        if hasattr(self.ui, 'btnQuickStart'):
+            self.ui.btnQuickStart.clicked.connect(self.on_quick_start)
+        
+        # 重新选择游戏路径按钮
+        if hasattr(self.ui, 'btnReSelectExe'):
+            self.ui.btnReSelectExe.clicked.connect(self.on_reselect_exe)
+    
+    def on_window_select(self, idx):
+        """窗口选择变化"""
+        hwnd = self.ui.WindowSelecter.itemData(idx)
+        self.state_manager.set_current_hwnd(hwnd)
+        print(f"切换到窗口: {hwnd}")
+        
+        # 更新 UI 显示当前窗口的状态
+        state = self.state_manager.get_current_state()
+        if state:
+            self.ui.StuckKeyStatus.setChecked(state.stuck_key_enabled)
+            print(f"当前窗口卡键状态: {state.stuck_key_enabled}")
+    
+    def save_current_state(self):
+        """保存当前窗口状态"""
+        state = self.state_manager.get_current_state()
+        if state:
+            state.blood_key = self.ui.MinBloodKeySelecter.currentText()
+            state.magic_key = self.ui.MinMagicKeySelecter.currentText()
+            state.tick_keys = [
+                self.ui.Tick1.currentText(),
+                self.ui.Tick2.currentText(),
+                self.ui.Tick3.currentText(),
+                self.ui.Tick4.currentText()
+            ]
+    
+    def on_stuck_key_toggled(self, state):
+        """卡键状态变化"""
+        self.state_manager.set_stuck_key(state == 2)
+    
+    def on_quick_start(self):
+        """快速启动按钮点击事件 - 创建子进程启动游戏"""
+        try:
+            # 从配置获取游戏路径
+            game_exe = self.config_manager.get("gameExe", "")
+            
+            # 如果没有配置，让用户选择
+            if not game_exe:
+                print("未配置游戏路径，请选择游戏客户端...")
+                
+                # 显示文件选择对话框
+                exe_path, _ = QFileDialog.getOpenFileName(
+                    self,
+                    "选择游戏客户端",
+                    "",
+                    "可执行文件 (*.exe);;所有文件 (*.*)"
+                )
+                
+                if exe_path:
+                    game_exe = exe_path
+                    self.config_manager.set("gameExe", game_exe)
+                    print(f"已选择并保存: {game_exe}")
+                else:
+                    print("未选择游戏客户端")
+                    return
+            
+            # 检查文件是否存在
+            if not os.path.exists(game_exe):
+                print(f"游戏文件不存在: {game_exe}")
+                
+                # 让用户重新选择
+                exe_path, _ = QFileDialog.getOpenFileName(
+                    self,
+                    "游戏文件不存在，请重新选择",
+                    "",
+                    "可执行文件 (*.exe);;所有文件 (*.*)"
+                )
+                
+                if exe_path:
+                    game_exe = exe_path
+                    self.config_manager.set("gameExe", game_exe)
+                    print(f"已重新选择: {game_exe}")
+                else:
+                    return
+            
+            # 启动游戏
+            args = [game_exe]
+            args.append(" -.	")
+            
+            process = subprocess.Popen(
+                args,
+                shell=False,
+                creationflags=subprocess.CREATE_NEW_CONSOLE,
+                cwd=os.path.dirname(game_exe)
+            )
+            print(f"游戏已启动，PID: {process.pid}")
+            
+        except Exception as e:
+            print(f"启动游戏失败: {e}")
+    
+    def on_reselect_exe(self):
+        """重新选择游戏路径按钮点击事件"""
+        try:
+            # 显示文件选择对话框
+            exe_path, _ = QFileDialog.getOpenFileName(
+                self,
+                "重新选择游戏客户端",
+                "",
+                "可执行文件 (*.exe);;所有文件 (*.*)"
+            )
+            
+            if exe_path:
+                # 更新配置
+                self.config_manager.set("gameExe", exe_path)
+                print(f"游戏路径已更新为: {exe_path}")
+            else:
+                print("未选择游戏客户端")
+                
+        except Exception as e:
+            print(f"选择游戏路径失败: {e}")
