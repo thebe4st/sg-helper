@@ -145,16 +145,35 @@ class MainWindow(QMainWindow):
                     return
             
             # 启动游戏
+            # 获取游戏目录作为工作目录
+            game_dir = os.path.dirname(game_exe)
+            if not game_dir:
+                game_dir = os.getcwd()
+            
+            # 添加游戏启动必要参数
             args = [game_exe]
-            args.append(" -.	")
+            args.append("-.	")  # 自动登录参数
+            
+            print(f"启动游戏: {' '.join(args)}")
+            print(f"工作目录: {game_dir}")
             
             process = subprocess.Popen(
-                args,
+                ' '.join(args),
                 shell=False,
-                creationflags=subprocess.CREATE_NEW_CONSOLE,
-                cwd=os.path.dirname(game_exe)
+                cwd=game_dir,
+                creationflags=subprocess.CREATE_NEW_CONSOLE
             )
+            
             print(f"游戏已启动，PID: {process.pid}")
+            
+            # 检查进程是否立即退出
+            import time
+            time.sleep(2)
+            if process.poll() is not None:
+                print(f"警告: 进程已退出，退出码: {process.returncode}")
+                print("可能需要以管理员身份运行，或检查游戏目录是否正确")
+            else:
+                print("进程正在运行中")
             
         except Exception as e:
             print(f"启动游戏失败: {e}")
