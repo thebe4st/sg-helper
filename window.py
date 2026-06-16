@@ -59,6 +59,12 @@ class MainWindow(QMainWindow):
         self.ui.Tick3.currentIndexChanged.connect(self.save_current_state)
         self.ui.Tick4.currentIndexChanged.connect(self.save_current_state)
         
+        # 血量和蓝量启用状态变化
+        if hasattr(self.ui, 'EnableBloodHelper'):
+            self.ui.EnableBloodHelper.stateChanged.connect(self.save_current_state)
+        if hasattr(self.ui, 'EnableMagicHelper'):
+            self.ui.EnableMagicHelper.stateChanged.connect(self.save_current_state)
+        
         # 卡键状态变化
         self.ui.StuckKeyStatus.stateChanged.connect(self.on_stuck_key_toggled)
         
@@ -81,6 +87,12 @@ class MainWindow(QMainWindow):
         if state:
             self.ui.StuckKeyStatus.setChecked(state.stuck_key_enabled)
             print(f"当前窗口卡键状态: {state.stuck_key_enabled}")
+            
+            # 恢复血量和蓝量启用状态
+            if hasattr(self.ui, 'EnableBloodHelper'):
+                self.ui.EnableBloodHelper.setChecked(state.enable_blood_helper)
+            if hasattr(self.ui, 'EnableMagicHelper'):
+                self.ui.EnableMagicHelper.setChecked(state.enable_magic_helper)
     
     def save_current_state(self):
         """保存当前窗口状态"""
@@ -94,6 +106,12 @@ class MainWindow(QMainWindow):
                 self.ui.Tick3.currentText(),
                 self.ui.Tick4.currentText()
             ]
+            
+            # 保存启用状态
+            if hasattr(self.ui, 'EnableBloodHelper'):
+                state.enable_blood_helper = self.ui.EnableBloodHelper.isChecked()
+            if hasattr(self.ui, 'EnableMagicHelper'):
+                state.enable_magic_helper = self.ui.EnableMagicHelper.isChecked()
     
     def on_stuck_key_toggled(self, state):
         """卡键状态变化"""

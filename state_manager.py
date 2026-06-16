@@ -3,8 +3,8 @@ class WindowState:
     def __init__(self, hwnd):
         self.hwnd = hwnd
         self.stuck_key_enabled = False
-        self.enable_blood_helper = True
-        self.enable_magic_helper = True
+        self.enable_blood_helper = False
+        self.enable_magic_helper = False
         self.blood_key = 'R'
         self.magic_key = 'T'
         self.tick_keys = ['A', '', '', '']  # Tick1-4
