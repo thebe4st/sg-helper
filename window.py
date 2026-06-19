@@ -78,6 +78,10 @@ class MainWindow(QMainWindow):
         # 重新选择游戏路径按钮
         if hasattr(self.ui, 'btnReSelectExe'):
             self.ui.btnReSelectExe.clicked.connect(self.on_reselect_exe)
+        
+        # 快速卡键选择
+        if hasattr(self.ui, 'QuickStick'):
+            self.ui.QuickStick.currentIndexChanged.connect(self.on_quick_stick_changed)
     
     def on_window_select(self, idx):
         """窗口选择变化"""
@@ -118,6 +122,38 @@ class MainWindow(QMainWindow):
                 state.enable_blood_helper = self.ui.EnableBloodHelper.isChecked()
             if hasattr(self.ui, 'EnableMagicHelper'):
                 state.enable_magic_helper = self.ui.EnableMagicHelper.isChecked()
+    
+    def on_quick_stick_changed(self, idx):
+        """快速卡键选择变化"""
+        text = self.ui.QuickStick.currentText()
+        print(f"快速卡键选择: {text}")
+        
+        if text == '单A':
+            self.ui.Tick1.setCurrentText('A')
+            self.ui.Tick2.setCurrentText('')
+            self.ui.Tick3.setCurrentText('')
+            self.ui.Tick4.setCurrentText('')
+            self.ui.Tick5.setCurrentText('')
+            self.ui.Tick6.setCurrentText('')
+            self.ui.Tick7.setCurrentText('')
+        elif text == '单Q':
+            self.ui.Tick1.setCurrentText('Q')
+            self.ui.Tick2.setCurrentText('')
+            self.ui.Tick3.setCurrentText('')
+            self.ui.Tick4.setCurrentText('')
+            self.ui.Tick5.setCurrentText('')
+            self.ui.Tick6.setCurrentText('')
+            self.ui.Tick7.setCurrentText('')
+        elif text == '多':
+            self.ui.Tick1.setCurrentText('T')
+            self.ui.Tick2.setCurrentText('R')
+            self.ui.Tick3.setCurrentText('E')
+            self.ui.Tick4.setCurrentText('W')
+            self.ui.Tick5.setCurrentText('A')
+            self.ui.Tick6.setCurrentText('')
+            self.ui.Tick7.setCurrentText('')
+        
+        self.save_current_state()
     
     def on_stuck_key_toggled(self, state):
         """卡键状态变化"""

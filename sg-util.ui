@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>195</width>
-    <height>640</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,13 +25,13 @@
   <property name="minimumSize">
    <size>
     <width>195</width>
-    <height>640</height>
+    <height>700</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>195</width>
-    <height>640</height>
+    <height>700</height>
    </size>
   </property>
   <property name="acceptDrops">
@@ -280,407 +280,453 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>390</y>
+      <y>430</y>
       <width>151</width>
-      <height>160</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="title">
      <string>卡键 Alt + ` 启用</string>
     </property>
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QComboBox" name="Tick1">
-       <property name="currentText">
-        <string/>
-       </property>
-       <item>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>S</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Q</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>E</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>T</string>
-        </property>
-       </item>
-      </widget>
+    <widget class="QComboBox" name="Tick1">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>27</y>
+       <width>58</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="currentText">
+      <string>A</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>A</string>
+      </property>
      </item>
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="StuckKeyStatus">
-       <property name="text">
-        <string>启用</string>
-       </property>
-      </widget>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
      </item>
-     <item row="1" column="0">
-      <widget class="QComboBox" name="Tick4">
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>S</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Q</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>E</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>T</string>
-        </property>
-       </item>
-      </widget>
+     <item>
+      <property name="text">
+       <string>S</string>
+      </property>
      </item>
-     <item row="2" column="0">
-      <widget class="QComboBox" name="Tick2">
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>S</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Q</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>E</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>T</string>
-        </property>
-       </item>
-      </widget>
+     <item>
+      <property name="text">
+       <string>D</string>
+      </property>
      </item>
-     <item row="4" column="0">
-      <widget class="QComboBox" name="Tick3">
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>S</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Q</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>E</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>T</string>
-        </property>
-       </item>
-      </widget>
+     <item>
+      <property name="text">
+       <string>F</string>
+      </property>
      </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="Tick5">
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>S</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Q</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>E</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>T</string>
-        </property>
-       </item>
-      </widget>
+     <item>
+      <property name="text">
+       <string>Q</string>
+      </property>
      </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="Tick6">
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>S</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Q</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>E</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>T</string>
-        </property>
-       </item>
-      </widget>
+     <item>
+      <property name="text">
+       <string>W</string>
+      </property>
      </item>
-     <item row="4" column="1">
-      <widget class="QComboBox" name="Tick7">
-       <property name="currentText">
-        <string>A</string>
-       </property>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>A</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>S</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>D</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>F</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Q</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>W</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>E</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>R</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>T</string>
-        </property>
-       </item>
-      </widget>
+     <item>
+      <property name="text">
+       <string>E</string>
+      </property>
      </item>
-    </layout>
+     <item>
+      <property name="text">
+       <string>R</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>T</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QCheckBox" name="StuckKeyStatus">
+     <property name="geometry">
+      <rect>
+       <x>75</x>
+       <y>27</y>
+       <width>56</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>启用</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="Tick4">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>58</y>
+       <width>58</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>A</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>S</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>D</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>F</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Q</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>W</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>E</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>R</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>T</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="Tick2">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>89</y>
+       <width>58</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>A</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>S</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>D</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>F</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Q</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>W</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>E</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>R</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>T</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="Tick3">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>125</y>
+       <width>58</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>A</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>S</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>D</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>F</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Q</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>W</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>E</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>R</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>T</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="Tick5">
+     <property name="geometry">
+      <rect>
+       <x>75</x>
+       <y>58</y>
+       <width>65</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>A</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>S</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>D</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>F</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Q</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>W</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>E</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>R</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>T</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="Tick6">
+     <property name="geometry">
+      <rect>
+       <x>75</x>
+       <y>89</y>
+       <width>65</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>A</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>S</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>D</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>F</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Q</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>W</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>E</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>R</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>T</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="Tick7">
+     <property name="geometry">
+      <rect>
+       <x>75</x>
+       <y>125</y>
+       <width>65</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="currentText">
+      <string/>
+     </property>
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>A</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>S</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>D</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>F</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Q</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>W</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>E</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>R</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>T</string>
+      </property>
+     </item>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
@@ -746,8 +792,8 @@
    <widget class="QPushButton" name="btnQuickStart">
     <property name="geometry">
      <rect>
-      <x>21</x>
-      <y>561</y>
+      <x>20</x>
+      <y>610</y>
       <width>151</width>
       <height>26</height>
      </rect>
@@ -759,8 +805,8 @@
    <widget class="QPushButton" name="btnReSelectExe">
     <property name="geometry">
      <rect>
-      <x>21</x>
-      <y>593</y>
+      <x>20</x>
+      <y>640</y>
       <width>151</width>
       <height>26</height>
      </rect>
@@ -774,6 +820,50 @@
     <property name="text">
      <string>重选游戏路径</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>400</y>
+      <width>148</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>卡键配置:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="QuickStick">
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>70</height>
+        </size>
+       </property>
+       <item>
+        <property name="text">
+         <string>单A</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>单Q</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>多</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

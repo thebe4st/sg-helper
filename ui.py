@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFormLayout,
-    QGraphicsView, QGridLayout, QGroupBox, QLabel,
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QGraphicsView,
+    QGridLayout, QGroupBox, QHBoxLayout, QLabel,
     QMainWindow, QPushButton, QSizePolicy, QStatusBar,
     QWidget)
 
@@ -26,14 +26,14 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.setWindowModality(Qt.WindowModality.NonModal)
         MainWindow.setEnabled(True)
-        MainWindow.resize(195, 640)
+        MainWindow.resize(195, 700)
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(255)
         sizePolicy.setVerticalStretch(100)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMinimumSize(QSize(195, 640))
-        MainWindow.setMaximumSize(QSize(195, 640))
+        MainWindow.setMinimumSize(QSize(195, 700))
+        MainWindow.setMaximumSize(QSize(195, 700))
         MainWindow.setAcceptDrops(False)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -149,9 +149,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_3 = QGroupBox(self.centralwidget)
         self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setGeometry(QRect(20, 390, 151, 160))
-        self.formLayout = QFormLayout(self.groupBox_3)
-        self.formLayout.setObjectName(u"formLayout")
+        self.groupBox_3.setGeometry(QRect(20, 430, 151, 171))
         self.Tick1 = QComboBox(self.groupBox_3)
         self.Tick1.addItem("")
         self.Tick1.addItem("")
@@ -164,14 +162,10 @@ class Ui_MainWindow(object):
         self.Tick1.addItem("")
         self.Tick1.addItem("")
         self.Tick1.setObjectName(u"Tick1")
-
-        self.formLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.Tick1)
-
+        self.Tick1.setGeometry(QRect(11, 27, 58, 25))
         self.StuckKeyStatus = QCheckBox(self.groupBox_3)
         self.StuckKeyStatus.setObjectName(u"StuckKeyStatus")
-
-        self.formLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.StuckKeyStatus)
-
+        self.StuckKeyStatus.setGeometry(QRect(75, 27, 56, 24))
         self.Tick4 = QComboBox(self.groupBox_3)
         self.Tick4.addItem("")
         self.Tick4.addItem("")
@@ -184,9 +178,7 @@ class Ui_MainWindow(object):
         self.Tick4.addItem("")
         self.Tick4.addItem("")
         self.Tick4.setObjectName(u"Tick4")
-
-        self.formLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.Tick4)
-
+        self.Tick4.setGeometry(QRect(11, 58, 58, 25))
         self.Tick2 = QComboBox(self.groupBox_3)
         self.Tick2.addItem("")
         self.Tick2.addItem("")
@@ -199,9 +191,7 @@ class Ui_MainWindow(object):
         self.Tick2.addItem("")
         self.Tick2.addItem("")
         self.Tick2.setObjectName(u"Tick2")
-
-        self.formLayout.setWidget(2, QFormLayout.ItemRole.LabelRole, self.Tick2)
-
+        self.Tick2.setGeometry(QRect(11, 89, 58, 24))
         self.Tick3 = QComboBox(self.groupBox_3)
         self.Tick3.addItem("")
         self.Tick3.addItem("")
@@ -214,9 +204,7 @@ class Ui_MainWindow(object):
         self.Tick3.addItem("")
         self.Tick3.addItem("")
         self.Tick3.setObjectName(u"Tick3")
-
-        self.formLayout.setWidget(4, QFormLayout.ItemRole.LabelRole, self.Tick3)
-
+        self.Tick3.setGeometry(QRect(11, 125, 58, 25))
         self.Tick5 = QComboBox(self.groupBox_3)
         self.Tick5.addItem("")
         self.Tick5.addItem("")
@@ -229,9 +217,7 @@ class Ui_MainWindow(object):
         self.Tick5.addItem("")
         self.Tick5.addItem("")
         self.Tick5.setObjectName(u"Tick5")
-
-        self.formLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.Tick5)
-
+        self.Tick5.setGeometry(QRect(75, 58, 65, 25))
         self.Tick6 = QComboBox(self.groupBox_3)
         self.Tick6.addItem("")
         self.Tick6.addItem("")
@@ -244,9 +230,7 @@ class Ui_MainWindow(object):
         self.Tick6.addItem("")
         self.Tick6.addItem("")
         self.Tick6.setObjectName(u"Tick6")
-
-        self.formLayout.setWidget(2, QFormLayout.ItemRole.FieldRole, self.Tick6)
-
+        self.Tick6.setGeometry(QRect(75, 89, 65, 24))
         self.Tick7 = QComboBox(self.groupBox_3)
         self.Tick7.addItem("")
         self.Tick7.addItem("")
@@ -259,9 +243,7 @@ class Ui_MainWindow(object):
         self.Tick7.addItem("")
         self.Tick7.addItem("")
         self.Tick7.setObjectName(u"Tick7")
-
-        self.formLayout.setWidget(4, QFormLayout.ItemRole.FieldRole, self.Tick7)
-
+        self.Tick7.setGeometry(QRect(75, 125, 65, 25))
         self.groupBox_4 = QGroupBox(self.centralwidget)
         self.groupBox_4.setObjectName(u"groupBox_4")
         self.groupBox_4.setGeometry(QRect(20, 10, 144, 86))
@@ -295,11 +277,31 @@ class Ui_MainWindow(object):
 
         self.btnQuickStart = QPushButton(self.centralwidget)
         self.btnQuickStart.setObjectName(u"btnQuickStart")
-        self.btnQuickStart.setGeometry(QRect(21, 561, 151, 26))
+        self.btnQuickStart.setGeometry(QRect(20, 610, 151, 26))
         self.btnReSelectExe = QPushButton(self.centralwidget)
         self.btnReSelectExe.setObjectName(u"btnReSelectExe")
-        self.btnReSelectExe.setGeometry(QRect(21, 593, 151, 26))
+        self.btnReSelectExe.setGeometry(QRect(20, 640, 151, 26))
         self.btnReSelectExe.setMaximumSize(QSize(1000, 30))
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(20, 400, 148, 28))
+        self.horizontalLayout = QHBoxLayout(self.widget)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.label_10 = QLabel(self.widget)
+        self.label_10.setObjectName(u"label_10")
+
+        self.horizontalLayout.addWidget(self.label_10)
+
+        self.QuickStick = QComboBox(self.widget)
+        self.QuickStick.addItem("")
+        self.QuickStick.addItem("")
+        self.QuickStick.addItem("")
+        self.QuickStick.setObjectName(u"QuickStick")
+        self.QuickStick.setMaximumSize(QSize(70, 70))
+
+        self.horizontalLayout.addWidget(self.QuickStick)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -353,7 +355,7 @@ class Ui_MainWindow(object):
         self.Tick1.setItemText(8, QCoreApplication.translate("MainWindow", u"R", None))
         self.Tick1.setItemText(9, QCoreApplication.translate("MainWindow", u"T", None))
 
-        self.Tick1.setCurrentText("")
+        self.Tick1.setCurrentText(QCoreApplication.translate("MainWindow", u"A", None))
         self.StuckKeyStatus.setText(QCoreApplication.translate("MainWindow", u"\u542f\u7528", None))
         self.Tick4.setItemText(0, "")
         self.Tick4.setItemText(1, QCoreApplication.translate("MainWindow", u"A", None))
@@ -421,11 +423,16 @@ class Ui_MainWindow(object):
         self.Tick7.setItemText(8, QCoreApplication.translate("MainWindow", u"R", None))
         self.Tick7.setItemText(9, QCoreApplication.translate("MainWindow", u"T", None))
 
-        self.Tick7.setCurrentText(QCoreApplication.translate("MainWindow", u"A", None))
+        self.Tick7.setCurrentText("")
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"\u7a97\u53e3", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u7a97\u53e3\uff1a", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"\u89d2\u8272\uff1a", None))
         self.btnQuickStart.setText(QCoreApplication.translate("MainWindow", u"\u5feb\u901f\u542f\u52a8\uff08\u4e0a\u6b21\u5927\u533a\uff09", None))
         self.btnReSelectExe.setText(QCoreApplication.translate("MainWindow", u"\u91cd\u9009\u6e38\u620f\u8def\u5f84", None))
+        self.label_10.setText(QCoreApplication.translate("MainWindow", u"\u5361\u952e\u914d\u7f6e:", None))
+        self.QuickStick.setItemText(0, QCoreApplication.translate("MainWindow", u"\u5355A", None))
+        self.QuickStick.setItemText(1, QCoreApplication.translate("MainWindow", u"\u5355Q", None))
+        self.QuickStick.setItemText(2, QCoreApplication.translate("MainWindow", u"\u591a", None))
+
     # retranslateUi
 
