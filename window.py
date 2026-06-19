@@ -58,6 +58,9 @@ class MainWindow(QMainWindow):
         self.ui.Tick2.currentIndexChanged.connect(self.save_current_state)
         self.ui.Tick3.currentIndexChanged.connect(self.save_current_state)
         self.ui.Tick4.currentIndexChanged.connect(self.save_current_state)
+        self.ui.Tick5.currentIndexChanged.connect(self.save_current_state)
+        self.ui.Tick6.currentIndexChanged.connect(self.save_current_state)
+        self.ui.Tick7.currentIndexChanged.connect(self.save_current_state)
         
         # 血量和蓝量启用状态变化
         if hasattr(self.ui, 'EnableBloodHelper'):
@@ -104,7 +107,10 @@ class MainWindow(QMainWindow):
                 self.ui.Tick1.currentText(),
                 self.ui.Tick2.currentText(),
                 self.ui.Tick3.currentText(),
-                self.ui.Tick4.currentText()
+                self.ui.Tick4.currentText(),
+                self.ui.Tick5.currentText(),
+                self.ui.Tick6.currentText(),
+                self.ui.Tick7.currentText()
             ]
             
             # 保存启用状态

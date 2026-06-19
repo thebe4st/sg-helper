@@ -12,11 +12,11 @@ class HotkeyManager:
     
     def register_hotkeys(self):
         """注册所有全局快捷键"""
-        # CTRL+` 切换卡键状态
-        keyboard.add_hotkey('ctrl+`', self.on_ctrl_backtick_pressed)
+        # ALT+` 切换卡键状态
+        keyboard.add_hotkey('alt+`', self.on_alt_backtick_pressed)
     
-    def on_ctrl_backtick_pressed(self):
-        """处理 CTRL+` 快捷键"""
+    def on_alt_backtick_pressed(self):
+        """处理 ALT+` 快捷键"""
         print(f"快捷键被触发，当前窗口: {self.state_manager.current_hwnd}")
         enabled = self.state_manager.toggle_stuck_key()
         

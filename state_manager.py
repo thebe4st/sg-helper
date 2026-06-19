@@ -7,7 +7,7 @@ class WindowState:
         self.enable_magic_helper = False
         self.blood_key = 'R'
         self.magic_key = 'T'
-        self.tick_keys = ['A', '', '', '']  # Tick1-4
+        self.tick_keys = ['A', '', '', '', '', '', '']  # Tick1-7
 
 class WindowStateManager:
     """管理所有窗口的状态"""
