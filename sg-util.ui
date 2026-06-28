@@ -286,7 +286,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>卡键 Alt + ` 启用</string>
+     <string>卡键 Win + ` 启用</string>
     </property>
     <widget class="QComboBox" name="Tick1">
      <property name="geometry">

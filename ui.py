@@ -343,7 +343,7 @@ class Ui_MainWindow(object):
         self.MinMagicKeySelecter.setItemText(1, QCoreApplication.translate("MainWindow", u"R", None))
         self.MinMagicKeySelecter.setItemText(2, QCoreApplication.translate("MainWindow", u"E", None))
 
-        self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"\u5361\u952e Alt + ` \u542f\u7528", None))
+        self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"\u5361\u952e Win + ` \u542f\u7528", None))
         self.Tick1.setItemText(0, QCoreApplication.translate("MainWindow", u"A", None))
         self.Tick1.setItemText(1, "")
         self.Tick1.setItemText(2, QCoreApplication.translate("MainWindow", u"S", None))
